@@ -1,0 +1,14 @@
+[server]
+# Same upload limit as the R app (options(shiny.maxRequestSize = 60 MB)).
+maxUploadSize = 60
+
+[browser]
+gatherUsageStats = false
+
+[theme]
+base = "light"
+primaryColor = "#2C3E50"
+textColor = "#2C3E50"
+secondaryBackgroundColor = "#F4F6F7"
+font = "Inter:https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap, sans-serif"
+metricValueFontSize = "1.9rem"
