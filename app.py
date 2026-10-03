@@ -43,6 +43,21 @@ def load_exposure(data: bytes):
     return read_exposure_table(io.BytesIO(data))
 
 
+def _toggle(flag: str) -> None:
+    st.session_state[flag] = not st.session_state.get(flag, False)
+
+
+def sample_switch(label: str, flag: str) -> None:
+    """On/off switch for a bundled sample file.
+
+    A real button rather than st.checkbox: taps on the checkbox were ignored on
+    some touch-screen tablets, whereas a <button> works on every device."""
+    on = st.session_state.get(flag, False)
+    st.button(label, key=f"{flag}_btn", on_click=_toggle, args=(flag,), width="stretch",
+              icon=":material/check_box:" if on else ":material/check_box_outline_blank:",
+              help="Tap again to stop using the sample file." if on else None)
+
+
 def _source(upload, sample_flag: str, sample_path: Path) -> bytes | None:
     if upload is not None:
         return upload.getvalue()
@@ -60,8 +75,10 @@ def sidebar_inputs():
     with st.sidebar:
         st.header("Controls")
         up = st.file_uploader("Claims data (.xlsx)", type=["xlsx"], key="data_file")
-        if up is None and SAMPLE_CLAIMS.exists():
-            st.checkbox("Use the bundled sample claims file", key="use_sample_claims")
+        if up is not None:
+            st.session_state["use_sample_claims"] = False
+        elif SAMPLE_CLAIMS.exists():
+            sample_switch("Use the bundled sample claims file", "use_sample_claims")
         claims_bytes = _source(up, "use_sample_claims", SAMPLE_CLAIMS)
         if claims_bytes:
             try:
@@ -73,8 +90,10 @@ def sidebar_inputs():
                                 key="exposure_file")
         st.caption("Columns: Period, EarnedPremium, Exposure. Drives the exposure-based Cape Cod, "
                    "Bornhuetter-Ferguson and Benktander a-priori.")
-        if up_e is None and SAMPLE_EXPOSURE.exists():
-            st.checkbox("Use the bundled sample exposure file", key="use_sample_exposure")
+        if up_e is not None:
+            st.session_state["use_sample_exposure"] = False
+        elif SAMPLE_EXPOSURE.exists():
+            sample_switch("Use the bundled sample exposure file", "use_sample_exposure")
         exposure_bytes = _source(up_e, "use_sample_exposure", SAMPLE_EXPOSURE)
         if exposure_bytes:
             try:

@@ -16,7 +16,7 @@ def data_checks(ctx: Ctx) -> None:
     if ctx.claims_error:
         st.error(ctx.claims_error)
     if ctx.claims is None:
-        st.info("Upload a claims workbook (.xlsx) in the sidebar - or tick **Use the bundled sample "
+        st.info("Upload a claims workbook (.xlsx) in the sidebar - or press **Use the bundled sample "
                 "claims file** - to begin. Expected columns: OriginDate, PaymentDate, ClaimAmount, "
                 "SubCat (transactional or aggregated rows).", icon=":material/upload_file:")
         return

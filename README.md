@@ -16,7 +16,7 @@ streamlit run app.py
 Run from this folder so Streamlit picks up `.streamlit/config.toml`
 (theme, 60 MB upload limit). Upload a claims workbook (`OriginDate`,
 `PaymentDate`, `ClaimAmount`, `SubCat`) and optionally an exposure workbook
-(`Period`, `EarnedPremium`, `Exposure`), or tick **Use the bundled sample …
+(`Period`, `EarnedPremium`, `Exposure`), or press **Use the bundled sample …
 file** to use the data in `sample_data/` (the same files the R app used).
 
 `python generate_dummy_data.py [out_dir]` regenerates dummy data (a port of
